@@ -1,3 +1,4 @@
+/* EBO-CSS-VERSION: v8-labelfix */
 #pru-calc { position: relative; }
 #pru-calc *,
 #pru-calc *::before,
@@ -383,6 +384,9 @@
   top: auto;
   z-index: 9999;
   display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 #pru-calc .pru-calc__tip-box::before,
 #pru-calc .pru-calc__tip-box::after {
@@ -422,7 +426,12 @@
   border-color: transparent transparent #fff transparent;
 }
 #pru-calc .pru-calc__tip:hover .pru-calc__tip-box,
-#pru-calc .pru-calc__tip-box.is-open { display: block !important; }
+#pru-calc .pru-calc__tip-box.is-open {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
 #pru-calc .pru-calc__tip-box p {
   font-size: 1.2rem !important;
   line-height: 1.6rem !important;
