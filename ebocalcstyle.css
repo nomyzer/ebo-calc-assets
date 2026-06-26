@@ -37,7 +37,7 @@
 
 /* ===== Left column (inputs) ===== */
 #pru-calc .calc-inputs {
-  flex: 5;
+  flex: 6;
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
@@ -236,7 +236,7 @@
 
 /* ===== Right column (results) ===== */
 #pru-calc .calc-results {
-  flex: 7;
+  flex: 5;
   display: flex !important;
   flex-direction: column;
   gap: 2.4rem;
@@ -267,8 +267,14 @@
   visibility: visible !important;
 }
 #pru-calc .calc-results__label-text {
-  display: inline !important;
+  flex: 1;
+  min-width: 0;
+  display: inline-block !important;
   visibility: visible !important;
+  opacity: 1 !important;
+  color: #20201e !important;
+  font-size: 1.3rem !important;
+  line-height: 1.9rem !important;
 }
 #pru-calc .calc-results__hero {
   font-size: 3rem !important;
@@ -300,6 +306,11 @@
 }
 #pru-calc .calc-results__detail-text {
   flex: 1;
+  min-width: 0;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #20201e !important;
 }
 #pru-calc .calc-results__detail-val {
   font-size: 1.8rem !important;
@@ -507,13 +518,15 @@
 /* ===== PRU theme overrides ===== */
 #pru-calc .calc-results__label-text {
   color: #20201e !important;
-  display: inline !important;
+  display: inline-block !important;
   visibility: visible !important;
+  opacity: 1 !important;
 }
 #pru-calc .calc-results__detail-text {
   color: #20201e !important;
   display: block !important;
   visibility: visible !important;
+  opacity: 1 !important;
 }
 #pru-calc .calc-results__detail-val {
   color: #3b352e !important;
