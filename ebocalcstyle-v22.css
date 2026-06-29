@@ -1,4 +1,4 @@
-/* EBO-CSS-VERSION: v21 */
+/* EBO-CSS-VERSION: v22 */
 #pru-calc {
   position: relative;
   padding: 0 !important;
@@ -38,7 +38,8 @@
   display: flex;
   align-items: flex-start;
   padding: 3.2rem 0;
-  gap: 4rem;
+  gap: 2.8rem;
+  margin-left: -4rem;
 }
 
 /* ===== Left column (inputs) ===== */
@@ -48,8 +49,6 @@
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
-  position: relative;
-  left: -4rem;
 }
 
 /* ===== Gender section ===== */
@@ -195,8 +194,8 @@
   appearance: none;
   position: absolute;
   bottom: -2rem;
-  left: 0;
-  width: 100%;
+  left: -0.42rem;
+  width: calc(100% + 0.84rem);
   height: 4rem;
   background: transparent;
   outline: none;
@@ -269,13 +268,14 @@
   display: flex !important;
   align-items: center;
   gap: 1.2rem;
-  padding-left: 2.8rem;
+  padding-left: 0;
+  overflow: visible;
 }
-/* ikona (i) wysunięta do lewej, wyśrodkowana pionowo */
+/* ikona (i) wysunięta w lewo poza kolumnę (w obszar gapu przy dividerze) */
 #pru-calc .calc-results__top .pru-calc__tip,
 #pru-calc .calc-results__detail .pru-calc__tip {
   position: absolute !important;
-  left: 0;
+  left: -2.6rem;
   top: 50%;
   transform: translateY(-50%);
   margin: 0;
@@ -336,7 +336,7 @@
   color: #20201e !important;
 }
 #pru-calc .calc-results__detail-val {
-  margin-left: auto;
+  margin-left: auto !important;
   text-align: right;
   font-size: 1.8rem !important;
   line-height: 3rem !important;
@@ -503,12 +503,12 @@
     flex-direction: column;
     padding: 1.6rem 0;
     gap: 1.6rem;
+    /* w układzie pionowym brak insetu kontenera */
+    margin-left: 0;
   }
   #pru-calc .calc-inputs {
     width: 100%;
     gap: 2rem;
-    /* w układzie pionowym brak gapu kontenera — bez przesunięcia */
-    left: 0;
   }
   #pru-calc .calc-results {
     width: 100%;
@@ -516,6 +516,15 @@
   }
   #pru-calc .calc-results__main {
     gap: 0.6rem;
+  }
+  /* (i) nie wystaje poza kartę w układzie pionowym */
+  #pru-calc .calc-results__top,
+  #pru-calc .calc-results__detail {
+    padding-left: 2.6rem;
+  }
+  #pru-calc .calc-results__top .pru-calc__tip,
+  #pru-calc .calc-results__detail .pru-calc__tip {
+    left: 0;
   }
   #pru-calc .calc-divider {
     width: 100%;
