@@ -1,4 +1,4 @@
-/* EBO-CSS-VERSION: v14 */
+/* EBO-CSS-VERSION: v15 */
 #pru-calc { position: relative; }
 #pru-calc *,
 #pru-calc *::before,
@@ -195,8 +195,9 @@
   outline: none;
   cursor: pointer;
   margin: 0;
-  padding: 0;
+  padding: 0 0.9rem;
   border: none;
+  box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   touch-action: pan-y;
 }
@@ -260,30 +261,27 @@
   align-items: center;
   gap: 1.6rem;
 }
-#pru-calc .calc-results__label {
+#pru-calc .pru-calc__r-head {
   flex: 1;
   min-width: 0;
-  font-size: 1.3rem !important;
-  line-height: 1.9rem !important;
-  font-weight: 400 !important;
-  color: #20201e !important;
+  font-size: 1.3rem;
+  line-height: 1.9rem;
+  font-weight: 400;
+  color: #20201e;
   display: flex !important;
   align-items: flex-start;
   gap: 0.8rem;
-  margin: 0 !important;
-  padding: 0 !important;
-  visibility: visible !important;
+  margin: 0;
+  padding: 0;
 }
-#pru-calc .calc-results__label-text {
+#pru-calc .pru-calc__r-head-txt {
   flex: 1;
   min-width: 0;
   overflow-wrap: anywhere;
   display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  color: #20201e !important;
-  font-size: 1.3rem !important;
-  line-height: 1.9rem !important;
+  color: #20201e;
+  font-size: 1.3rem;
+  line-height: 1.9rem;
 }
 #pru-calc .calc-results__hero {
   font-size: 3rem !important;
@@ -332,7 +330,7 @@
   display: block !important;
   visibility: visible !important;
 }
-#pru-calc .calc-results__label .pru-calc__tip,
+#pru-calc .pru-calc__r-head .pru-calc__tip,
 #pru-calc .calc-results__detail .pru-calc__tip {
   flex-shrink: 0;
   margin-top: 0.05rem;
@@ -550,7 +548,14 @@
 
 
 /* ===== PRU theme overrides ===== */
-#pru-calc .calc-results__label-text {
+#pru-calc .calc-inputs,
+#pru-calc .calc-inputs > div,
+#pru-calc .calc-toggle,
+#pru-calc .calc-age__slider-wrap {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+#pru-calc .pru-calc__r-head-txt {
   color: #20201e !important;
   display: block !important;
   visibility: visible !important;
@@ -575,9 +580,8 @@
   display: flex !important;
   visibility: visible !important;
 }
-#pru-calc .calc-results__label {
+#pru-calc .pru-calc__r-head {
   display: flex !important;
-  visibility: visible !important;
 }
 #pru-calc a.calc-cta,
 #pru-calc a.calc-cta:link,
