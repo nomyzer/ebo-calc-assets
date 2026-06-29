@@ -40,7 +40,7 @@ var open=d.classList.contains('is-open');
 var btns=d.querySelectorAll('.calc-disclaimer__btn');
 for(var i=0;i<btns.length;i++){btns[i].setAttribute('aria-expanded',open?'true':'false');}
 }
-function pruTipHide(box){box.classList.remove('is-open');box.classList.remove('is-flipped');box.hidden=true;box.style.transform='';box.style.left='';box.style.removeProperty('--tip-arrow-offset');}
+function pruTipHide(box){box.classList.remove('is-open');box.classList.remove('is-flipped');box.hidden=true;box.style.setProperty('display','none','important');box.style.transform='';box.style.left='';box.style.removeProperty('--tip-arrow-offset');}
 function pruTip(e){
 e.stopPropagation();
 var box=e.currentTarget.querySelector('.pru-calc__tip-box');
@@ -50,6 +50,7 @@ var all=document.querySelectorAll('#pru-calc .pru-calc__tip-box');
 for(var i=0;i<all.length;i++)pruTipHide(all[i]);
 if(!open){
 box.hidden=false;
+box.style.removeProperty('display');
 box.classList.add('is-open');
 var rect=box.getBoundingClientRect();
 if(rect.top<120){box.classList.add('is-flipped');}
@@ -66,7 +67,7 @@ try{M=JSON.parse(dataEl.textContent);}
 catch(err){console.error("[EBO] Nie udało się sparsować pru-data JSON:",err,"\nSurowa treść:",dataEl.textContent.slice(0,200));return;}
 st={g:null,a:35};
 var tips=document.querySelectorAll('#pru-calc .pru-calc__tip');
-for(var i=0;i<tips.length;i++){var bx=tips[i].querySelector('.pru-calc__tip-box');if(bx)bx.hidden=true;tips[i].addEventListener('click',pruTip);tips[i].addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===" "){e.preventDefault();pruTip(e);}if(e.key==='Escape'){var b=e.currentTarget.querySelector('.pru-calc__tip-box');if(b)pruTipHide(b);}});}
+for(var i=0;i<tips.length;i++){var bx=tips[i].querySelector('.pru-calc__tip-box');if(bx){bx.hidden=true;bx.style.setProperty('display','none','important');}tips[i].addEventListener('click',pruTip);tips[i].addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===" "){e.preventDefault();pruTip(e);}if(e.key==='Escape'){var b=e.currentTarget.querySelector('.pru-calc__tip-box');if(b)pruTipHide(b);}});}
 document.addEventListener('click',function(){
 var all=document.querySelectorAll('#pru-calc .pru-calc__tip-box');
 for(var i=0;i<all.length;i++)pruTipHide(all[i]);
