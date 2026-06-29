@@ -1,4 +1,4 @@
-/* EBO-CSS-VERSION: v13 */
+/* EBO-CSS-VERSION: v14 */
 #pru-calc { position: relative; }
 #pru-calc *,
 #pru-calc *::before,
@@ -262,19 +262,23 @@
 }
 #pru-calc .calc-results__label {
   flex: 1;
-  position: relative;
+  min-width: 0;
   font-size: 1.3rem !important;
   line-height: 1.9rem !important;
   font-weight: 400 !important;
   color: #20201e !important;
-  display: block !important;
+  display: flex !important;
+  align-items: flex-start;
+  gap: 0.8rem;
   margin: 0 !important;
-  padding: 0 0 0 2.6rem !important;
+  padding: 0 !important;
   visibility: visible !important;
 }
 #pru-calc .calc-results__label-text {
+  flex: 1;
+  min-width: 0;
   overflow-wrap: anywhere;
-  display: inline !important;
+  display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
   color: #20201e !important;
@@ -300,15 +304,13 @@
   visibility: visible !important;
 }
 #pru-calc .calc-results__detail {
-  position: relative;
   font-size: 1.3rem !important;
   line-height: 1.9rem !important;
   font-weight: 400 !important;
   color: #20201e !important;
   display: flex !important;
-  align-items: center;
-  gap: 1.6rem;
-  padding-left: 2.6rem;
+  align-items: flex-start;
+  gap: 0.8rem;
   visibility: visible !important;
 }
 #pru-calc .calc-results__detail-text {
@@ -332,10 +334,8 @@
 }
 #pru-calc .calc-results__label .pru-calc__tip,
 #pru-calc .calc-results__detail .pru-calc__tip {
-  position: absolute;
-  left: 0;
-  top: 0;
   flex-shrink: 0;
+  margin-top: 0.05rem;
 }
 
 /* ===== CTA ===== */
@@ -552,7 +552,7 @@
 /* ===== PRU theme overrides ===== */
 #pru-calc .calc-results__label-text {
   color: #20201e !important;
-  display: inline-block !important;
+  display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
 }
@@ -572,6 +572,10 @@
   visibility: visible !important;
 }
 #pru-calc .calc-results__detail {
+  display: flex !important;
+  visibility: visible !important;
+}
+#pru-calc .calc-results__label {
   display: flex !important;
   visibility: visible !important;
 }
