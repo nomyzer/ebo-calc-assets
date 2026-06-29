@@ -1,4 +1,4 @@
-/* EBO-CSS-VERSION: v24 */
+/* EBO-CSS-VERSION: v25 */
 #pru-calc {
   position: relative;
   width: 100% !important;
@@ -38,12 +38,15 @@
 }
 
 /* ===== Body (2 columns) ===== */
+/* Nagłówek i disclaimer są pełnej szerokości (do żółtych linii); kolumny
+   body są wcięte z lewej o ~4rem — poszerzamy body w lewo (prawy brzeg
+   bez zmian) ujemnym marginesem, width:auto żeby SIĘ POSZERZAŁ, nie przesuwał */
 #pru-calc .calc-body {
   display: flex;
   align-items: flex-start;
   padding: 3.2rem 0;
   gap: 2.4rem;
-  width: 100%;
+  margin-left: -4rem;
 }
 
 /* ===== Left column (inputs) ===== */
@@ -320,8 +323,10 @@
 /* ===== CTA ===== */
 #pru-calc .calc-cta {
   display: block !important;
-  width: 100%;
-  padding: 1.6rem 3.2rem !important;
+  width: auto;
+  min-width: 24rem;
+  align-self: flex-end;
+  padding: 1.6rem 4.8rem !important;
   background: #EB5C37 !important;
   color: #fff !important;
   font-family: inherit;
@@ -485,6 +490,12 @@
   }
   #pru-calc .calc-results__main {
     gap: 0.6rem;
+  }
+  /* button pełnej szerokości w układzie pionowym */
+  #pru-calc .calc-cta {
+    width: 100%;
+    min-width: 0;
+    align-self: stretch;
   }
   /* (i) nie wystaje poza kartę w układzie pionowym */
   #pru-calc .calc-results__detail {
