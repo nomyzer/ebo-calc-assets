@@ -1,9 +1,8 @@
-/* EBO-CSS-VERSION: v18 */
-/* br between tip and label — containers must be block, not flex */
+/* EBO-CSS-VERSION: v19 */
 #pru-calc {
   position: relative;
   padding: 0 !important;
-  margin-left: 0 !important;
+  margin-left: -4rem !important;
   margin-right: 0 !important;
 }
 #pru-calc *,
@@ -556,7 +555,7 @@
 /* Higher specificity (div#) beats most theme rules */
 div#pru-calc {
   padding: 0 !important;
-  margin-left: 0 !important;
+  margin-left: -4rem !important;
   margin-right: 0 !important;
 }
 div#pru-calc div.calc-card {
