@@ -40,7 +40,7 @@ var open=d.classList.contains('is-open');
 var btns=d.querySelectorAll('.calc-disclaimer__btn');
 for(var i=0;i<btns.length;i++){btns[i].setAttribute('aria-expanded',open?'true':'false');}
 }
-function pruTipHide(box){box.classList.remove('is-open');box.classList.remove('is-flipped');box.hidden=true;}
+function pruTipHide(box){box.classList.remove('is-open');box.classList.remove('is-flipped');box.hidden=true;box.style.transform='';box.style.left='';box.style.removeProperty('--tip-arrow-offset');}
 function pruTip(e){
 e.stopPropagation();
 var box=e.currentTarget.querySelector('.pru-calc__tip-box');
@@ -53,6 +53,10 @@ box.hidden=false;
 box.classList.add('is-open');
 var rect=box.getBoundingClientRect();
 if(rect.top<8){box.classList.add('is-flipped');}
+var pad=8,shift=0;
+if(rect.left<pad)shift=pad-rect.left;
+else if(rect.right>window.innerWidth-pad)shift=(window.innerWidth-pad)-rect.right;
+if(shift){box.style.transform='translateX(calc(-50% + '+Math.round(shift)+'px))';box.style.setProperty('--tip-arrow-offset',Math.round(shift)+'px');}
 }
 }
 function pruInit(){
