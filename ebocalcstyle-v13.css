@@ -1,4 +1,4 @@
-/* EBO-CSS-VERSION: v12-sliderbtn */
+/* EBO-CSS-VERSION: v13 */
 #pru-calc { position: relative; }
 #pru-calc *,
 #pru-calc *::before,
@@ -378,7 +378,8 @@
   color: #055A60;
   flex-shrink: 0;
 }
-#pru-calc .pru-calc__tip-box[hidden] {
+#pru-calc .pru-calc__tip-box[hidden],
+#pru-calc .pru-calc__tip:hover .pru-calc__tip-box[hidden] {
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
@@ -406,7 +407,7 @@
 #pru-calc .pru-calc__tip-box::after {
   content: '';
   position: absolute;
-  left: 50%;
+  left: calc(50% - var(--tip-arrow-offset, 0px));
   border-style: solid;
   top: auto;
 }
