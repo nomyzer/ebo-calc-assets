@@ -1,5 +1,12 @@
-/* EBO-CSS-VERSION: v15 */
+/* EBO-CSS-VERSION: v16 */
 #pru-calc { position: relative; }
+#pru-calc,
+#pru-calc .calc-card {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
 #pru-calc *,
 #pru-calc *::before,
 #pru-calc *::after { box-sizing: border-box; }
@@ -123,6 +130,7 @@
   border: 1px solid #DCF3F3;
   border-radius: 0;
   overflow: visible;
+  overflow-x: clip;
 }
 #pru-calc .calc-age__step {
   width: 5.6rem;
@@ -195,9 +203,8 @@
   outline: none;
   cursor: pointer;
   margin: 0;
-  padding: 0 0.9rem;
+  padding: 0;
   border: none;
-  box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   touch-action: pan-y;
 }
@@ -582,6 +589,14 @@
 }
 #pru-calc .pru-calc__r-head {
   display: flex !important;
+}
+/* fallback: old class name in case CDN serves stale HTML */
+#pru-calc .calc-results__label {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 0.8rem;
+  flex: 1;
+  min-width: 0;
 }
 #pru-calc a.calc-cta,
 #pru-calc a.calc-cta:link,
