@@ -1,4 +1,4 @@
-/* EBO-CSS-VERSION: v22 */
+/* EBO-CSS-VERSION: v23 */
 #pru-calc {
   position: relative;
   padding: 0 !important;
@@ -194,8 +194,8 @@
   appearance: none;
   position: absolute;
   bottom: -2rem;
-  left: -0.42rem;
-  width: calc(100% + 0.84rem);
+  left: 0;
+  width: 100%;
   height: 4rem;
   background: transparent;
   outline: none;
@@ -215,14 +215,14 @@
 }
 #pru-calc .calc-rng::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 3.2rem;
-  height: 3.2rem;
+  width: 2.4rem;
+  height: 2.4rem;
   border: none;
   border-radius: 50%;
-  background: radial-gradient(circle at center, #fff 0 0.9rem, #055A60 0.9rem 1.18rem, transparent 1.24rem);
+  background: radial-gradient(circle at center, #fff 0 0.9rem, #055A60 0.9rem 1.18rem, transparent 1.2rem);
   box-shadow: none;
   cursor: pointer;
-  margin-top: -1.4rem;
+  margin-top: -1rem;
 }
 #pru-calc .calc-rng::-moz-range-track {
   height: 4px;
@@ -230,11 +230,11 @@
   background: linear-gradient(90deg, #055A60 var(--pct, 50%), #DCF3F3 var(--pct, 50%));
 }
 #pru-calc .calc-rng::-moz-range-thumb {
-  width: 3.2rem;
-  height: 3.2rem;
+  width: 2.4rem;
+  height: 2.4rem;
   border: none;
   border-radius: 50%;
-  background: radial-gradient(circle at center, #fff 0 0.9rem, #055A60 0.9rem 1.18rem, transparent 1.24rem);
+  background: radial-gradient(circle at center, #fff 0 0.9rem, #055A60 0.9rem 1.18rem, transparent 1.2rem);
   box-shadow: none;
   cursor: pointer;
 }
@@ -260,19 +260,19 @@
 #pru-calc .calc-results__main {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1.6rem;
+  width: 100%;
 }
-#pru-calc .calc-results__top,
+/* Wszystkie wiersze identyczne: [ (i) abs ][ tekst flex:1 ][ kwota do prawej ] */
 #pru-calc .calc-results__detail {
   position: relative;
   display: flex !important;
   align-items: center;
   gap: 1.2rem;
-  padding-left: 0;
-  overflow: visible;
+  width: 100%;
+  visibility: visible !important;
 }
-/* ikona (i) wysunięta w lewo poza kolumnę (w obszar gapu przy dividerze) */
-#pru-calc .calc-results__top .pru-calc__tip,
+/* (i) wysunięta w lewo, wyśrodkowana pionowo względem tekstu wiersza */
 #pru-calc .calc-results__detail .pru-calc__tip {
   position: absolute !important;
   left: -2.6rem;
@@ -280,72 +280,35 @@
   transform: translateY(-50%);
   margin: 0;
 }
-#pru-calc .pru-calc__r-head {
-  flex: 1;
+#pru-calc .calc-results__detail-text {
+  flex: 1 1 auto;
   min-width: 0;
+  overflow-wrap: anywhere;
+  display: block !important;
   font-size: 1.3rem;
   line-height: 1.9rem;
   font-weight: 400;
-  color: #20201e;
-  display: block !important;
-  margin: 0;
-  padding: 0;
-}
-#pru-calc .pru-calc__r-head-txt {
-  flex: 1;
-  min-width: 0;
-  overflow-wrap: anywhere;
-  display: block !important;
-  color: #20201e;
-  font-size: 1.3rem;
-  line-height: 1.9rem;
-}
-#pru-calc .calc-results__hero {
-  font-size: 3rem !important;
-  line-height: 3.8rem !important;
-  font-weight: 700 !important;
-  color: #EB5C37 !important;
-  margin: 0 0 0 auto !important;
-  padding: 0 !important;
-  display: block !important;
-  white-space: nowrap;
-  flex-shrink: 0;
-  text-align: right;
-  visibility: visible !important;
-}
-#pru-calc .calc-results__details {
-  display: flex !important;
-  flex-direction: column;
-  gap: 0.8rem;
-  visibility: visible !important;
-}
-#pru-calc .calc-results__detail {
-  font-size: 1.3rem !important;
-  line-height: 1.9rem !important;
-  font-weight: 400 !important;
   color: #20201e !important;
-  visibility: visible !important;
-}
-#pru-calc .calc-results__detail-text {
-  flex: 1;
-  min-width: 0;
-  overflow-wrap: anywhere;
-  display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
-  color: #20201e !important;
 }
 #pru-calc .calc-results__detail-val {
   margin-left: auto !important;
   text-align: right;
-  font-size: 1.8rem !important;
-  line-height: 3rem !important;
-  font-weight: 700 !important;
-  color: #3b352e !important;
+  flex: 0 0 auto;
   white-space: nowrap;
-  flex-shrink: 0;
   display: block !important;
+  font-size: 1.8rem;
+  line-height: 3rem;
+  font-weight: 700;
+  color: #3b352e !important;
   visibility: visible !important;
+}
+#pru-calc .calc-results__detail-val--hero {
+  font-size: 3rem !important;
+  line-height: 3.8rem !important;
+  font-weight: 700 !important;
+  color: #EB5C37 !important;
 }
 
 /* ===== CTA ===== */
@@ -518,11 +481,9 @@
     gap: 0.6rem;
   }
   /* (i) nie wystaje poza kartę w układzie pionowym */
-  #pru-calc .calc-results__top,
   #pru-calc .calc-results__detail {
     padding-left: 2.6rem;
   }
-  #pru-calc .calc-results__top .pru-calc__tip,
   #pru-calc .calc-results__detail .pru-calc__tip {
     left: 0;
   }
@@ -544,10 +505,9 @@
   /* Przyciski płci: mniejszy font i padding na wąskich ekranach */
   #pru-calc .pru-calc__card { font-size: 1.6rem; padding: 1.4rem 1.2rem; gap: 0.8rem; }
   /* Wyniki: kwoty zawijają się pod tekst, ale dalej do prawej */
-  #pru-calc .calc-results__top,
   #pru-calc .calc-results__detail { flex-wrap: wrap; row-gap: 0.2rem; }
-  #pru-calc .calc-results__hero { font-size: 2.8rem !important; line-height: 3.4rem !important; flex-basis: 100%; text-align: right; }
   #pru-calc .calc-results__detail-val { flex-basis: 100%; text-align: right; }
+  #pru-calc .calc-results__detail-val--hero { font-size: 2.8rem !important; line-height: 3.4rem !important; }
   /* Tooltip nie wychodzi poza ekran */
   .pru-calc__tip-box { max-width: calc(100vw - 2rem); }
 }
@@ -584,12 +544,6 @@ div#pru-calc div.calc-inputs {
   padding-left: 0 !important;
   margin-left: 0 !important;
 }
-#pru-calc .pru-calc__r-head-txt {
-  color: #20201e !important;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
 #pru-calc .calc-results__detail-text {
   color: #20201e !important;
   display: block !important;
@@ -601,24 +555,9 @@ div#pru-calc div.calc-inputs {
   display: block !important;
   visibility: visible !important;
 }
-#pru-calc .calc-results__details {
-  display: flex !important;
-  visibility: visible !important;
-}
 #pru-calc .calc-results__detail {
   display: flex !important;
   visibility: visible !important;
-}
-#pru-calc .pru-calc__r-head {
-  display: block !important;
-}
-/* fallback: old class name in case CDN serves stale HTML */
-#pru-calc .calc-results__label {
-  display: flex !important;
-  align-items: flex-start;
-  gap: 0.8rem;
-  flex: 1;
-  min-width: 0;
 }
 #pru-calc a.calc-cta,
 #pru-calc a.calc-cta:link,
