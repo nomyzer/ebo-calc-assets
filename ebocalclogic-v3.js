@@ -52,7 +52,7 @@ if(!open){
 box.hidden=false;
 box.classList.add('is-open');
 var rect=box.getBoundingClientRect();
-if(rect.top<8){box.classList.add('is-flipped');}
+if(rect.top<120){box.classList.add('is-flipped');}
 var pad=8,shift=0;
 if(rect.left<pad)shift=pad-rect.left;
 else if(rect.right>window.innerWidth-pad)shift=(window.innerWidth-pad)-rect.right;
