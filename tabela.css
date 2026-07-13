@@ -1,0 +1,132 @@
+
+.kb-scroll-off {
+  overflow-x: visible;
+}
+
+.kb-scroll-off .scroll-element {
+  visibility: hidden;
+  height: 0;
+}
+
+.kb-benefits,
+.kb-benefits * {
+  box-sizing: border-box;
+}
+
+.kb-benefits {
+  width: 100%;
+  max-width: 100%;
+  font-family: "Nunito Sans", -apple-system, "Segoe UI", Arial, sans-serif;
+  color: #3B352E;
+}
+
+.kb-benefits .kb-benefits__wrap {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 1px;
+  margin: 0 -1px;
+  overflow-x: hidden;
+}
+
+.kb-benefits .kb-benefits__table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  margin: 0;
+}
+
+.kb-benefits .kb-benefits__col--category { width: 15%; }
+.kb-benefits .kb-benefits__col--event    { width: 41%; }
+.kb-benefits .kb-benefits__col--amount   { width: 21%; }
+.kb-benefits .kb-benefits__col--max      { width: 21%; }
+
+.kb-benefits .kb-benefits__cell {
+  border: 1px solid #D1D1D1;
+  padding: 12px 16px;
+  text-align: left;
+  vertical-align: middle;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #3B352E;
+  background: #fff;
+}
+
+.kb-benefits .kb-benefits__cell--head {
+  background: #F3F3F3;
+  color: #3B352E;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.kb-benefits .kb-benefits__cell--corner {
+  background: transparent;
+  border: 0;
+}
+
+.kb-benefits .kb-benefits__cell--category {
+  background: #F5F5F5;
+  font-weight: 600;
+  text-align: center;
+  color: #3B352E;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+.kb-benefits .kb-benefits__cell--max {
+  text-align: center;
+  color: #3B352E;
+}
+
+.kb-benefits .kb-benefits__cell--amount {
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+
+  .kb-benefits .kb-benefits__wrap {
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #D1D1D1 transparent;
+  }
+
+  .kb-benefits .kb-benefits__wrap::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .kb-benefits .kb-benefits__wrap::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .kb-benefits .kb-benefits__wrap::-webkit-scrollbar-thumb {
+    background: #D1D1D1;
+    border-radius: 3px;
+  }
+
+  .kb-benefits .kb-benefits__table {
+    min-width: 560px;
+  }
+
+  .kb-benefits .kb-benefits__col--category { width: 36px; }
+  .kb-benefits .kb-benefits__col--event    { width: auto; }
+  .kb-benefits .kb-benefits__col--amount   { width: 96px; }
+  .kb-benefits .kb-benefits__col--max      { width: 110px; }
+
+  .kb-benefits .kb-benefits__cell--category {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 0.4px;
+    padding: 8px 0;
+  }
+}
