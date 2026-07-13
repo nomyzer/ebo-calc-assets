@@ -1,17 +1,22 @@
+
 .kb-scroll-off,
 .scroll-wrapper:has(.kb-benefits),
 .scroll-content:has(.kb-benefits),
-.scroll-scrollx_visible:has(.kb-benefits) {
+.scroll-scrollx_visible:has(.kb-benefits),
+.kb-benefits .scroll-wrapper,
+.kb-benefits .scroll-content,
+.kb-benefits .scroll-scrollx_visible {
   overflow: visible !important;
   height: auto !important;
   max-height: none !important;
+  width: auto !important;
+  max-width: 100% !important;
 }
 
-.kb-scroll-off > .scroll-element,
-.kb-scroll-off .scroll-element.scroll-x,
-.scroll-wrapper:has(.kb-benefits) > .scroll-element,
-.scroll-wrapper:has(.kb-benefits) .scroll-element.scroll-x,
-.scroll-scrollx_visible:has(.kb-benefits) > .scroll-element {
+.kb-scroll-off .scroll-element,
+.scroll-wrapper:has(.kb-benefits) .scroll-element,
+.scroll-scrollx_visible:has(.kb-benefits) .scroll-element,
+.kb-benefits .scroll-element {
   display: none !important;
 }
 
@@ -27,13 +32,11 @@
   color: #3B352E !important;
 }
 
-/* Jedyny scroll-container tabeli */
+
 .kb-benefits .kb-benefits__wrap {
   width: 100%;
   max-width: 100%;
-  padding: 0 1px;
-  margin: 0 -1px;
-  overflow-x: hidden;
+  overflow: visible;
 }
 
 .kb-benefits .kb-benefits__table {
@@ -106,7 +109,7 @@
   white-space: nowrap !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
   .kb-benefits .kb-benefits__wrap {
     overflow-x: auto;
@@ -128,13 +131,13 @@
   }
 
   .kb-benefits .kb-benefits__table {
-    min-width: 560px !important;
+    min-width: 720px !important;
   }
 
   .kb-benefits .kb-benefits__col--category { width: 52px; }
   .kb-benefits .kb-benefits__col--event    { width: auto; }
-  .kb-benefits .kb-benefits__col--amount   { width: 96px; }
-  .kb-benefits .kb-benefits__col--max      { width: 110px; }
+  .kb-benefits .kb-benefits__col--amount   { width: 120px; }
+  .kb-benefits .kb-benefits__col--max      { width: 140px; }
 
   .kb-benefits .kb-benefits__cell--category {
     writing-mode: vertical-rl;
