@@ -1,7 +1,3 @@
-.kb-scroll-off,
-.scroll-wrapper:has(.kb-benefits),
-.scroll-content:has(.kb-benefits),
-.scroll-scrollx_visible:has(.kb-benefits),
 .kb-benefits .scroll-wrapper,
 .kb-benefits .scroll-content,
 .kb-benefits .scroll-scrollx_visible {
@@ -10,11 +6,10 @@
   max-height: none !important;
   width: auto !important;
   max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
-.kb-scroll-off .scroll-element,
-.scroll-wrapper:has(.kb-benefits) .scroll-element,
-.scroll-scrollx_visible:has(.kb-benefits) .scroll-element,
 .kb-benefits .scroll-element {
   display: none !important;
 }
@@ -117,8 +112,9 @@
     -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
 
+    width: calc(100% + 16px);
+    max-width: none;
     margin-right: -16px;
-    margin-bottom: 0 !important;
   }
 
   .kb-benefits .kb-benefits__wrap::-webkit-scrollbar {
@@ -127,9 +123,11 @@
     height: 0;
   }
 
+  .kb-benefits .kb-benefits__wrap,
   .kb-benefits .kb-benefits__wrap > *,
   .kb-benefits .kb-benefits__table {
     margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
   }
 
   .kb-benefits .kb-benefits__sbtrack {
