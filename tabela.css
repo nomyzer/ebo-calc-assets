@@ -1,3 +1,4 @@
+
 .kb-scroll-off,
 .scroll-wrapper:has(.kb-benefits),
 .scroll-content:has(.kb-benefits),
@@ -26,7 +27,9 @@
 
 .kb-benefits {
   width: 100%;
-  max-width: 100%;
+  max-width: 1236px;
+  margin-left: auto;
+  margin-right: auto;
   font-family: "Nunito Sans", -apple-system, "Segoe UI", Arial, sans-serif !important;
   color: #3B352E !important;
 }
@@ -109,32 +112,42 @@
 
 @media (max-width: 900px) {
 
+
   .kb-benefits .kb-benefits__wrap {
-    overflow-x: scroll;
-    scrollbar-width: thin;
-    scrollbar-color: #B9B9B9 #EFEFEF;
-    padding-bottom: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
   }
 
   .kb-benefits .kb-benefits__wrap::-webkit-scrollbar {
-    height: 6px;
-    -webkit-appearance: none;
+    display: none;
+    width: 0;
+    height: 0;
   }
-
-  .kb-benefits .kb-benefits__wrap::-webkit-scrollbar-track {
+  .kb-benefits .kb-benefits__sbtrack {
+    position: relative;
+    height: 6px;
+    margin-top: 8px;
     background: #EFEFEF;
     border-radius: 3px;
   }
 
-  .kb-benefits .kb-benefits__wrap::-webkit-scrollbar-thumb {
+  .kb-benefits .kb-benefits__sbthumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 6px;
     background: #B9B9B9;
     border-radius: 3px;
+    cursor: pointer;
+    touch-action: none;
   }
 
-  .kb-benefits .kb-benefits__wrap::-webkit-scrollbar-thumb:hover {
+  .kb-benefits .kb-benefits__sbthumb:hover,
+  .kb-benefits .kb-benefits__sbthumb:active {
     background: #9E9E9E;
   }
-
   .kb-benefits .kb-benefits__table {
     min-width: 720px !important;
   }
