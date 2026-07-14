@@ -58,29 +58,46 @@
 
   function watchInlineWidths(wrap) {
     if (!window.MutationObserver) return;
-    var mo = new MutationObserver(function (muts) {
-      for (var i = 0; i < muts.length; i++) {
-        var el = muts[i].target;
-        if (el.style && (el.style.width || el.style.minWidth ||
-            el.style.maxWidth || el.style.height)) {
-          stripInlineWidths(wrap);
-          break;
-        }
-      }
+    var pending = false;
+    var observing = false;
+    var mo = new MutationObserver(function () {
+      if (pending) return;
+      pending = true;
+      setTimeout(function () {
+        pending = false;
+        stop();
+        stripInlineWidths(wrap);
+        start();
+      }, 150);
     });
-    mo.observe(wrap, {
-      attributes: true,
-      attributeFilter: ['style'],
-      subtree: true
-    });
+    function start() {
+      if (observing) return;
+      observing = true;
+      mo.observe(wrap, {
+        attributes: true,
+        attributeFilter: ['style'],
+        subtree: true
+      });
+    }
+    function stop() {
+      if (!observing) return;
+      observing = false;
+      mo.disconnect();
+    }
+    wrap.kbStripSafely = function () {
+      stop();
+      stripInlineWidths(wrap);
+      start();
+    };
+    start();
   }
 
   function initKbScrollbar(wrap) {
     if (wrap.dataset.kbScrollbar === '1') return;
     wrap.dataset.kbScrollbar = '1';
 
-    stripInlineWidths(wrap);
     watchInlineWidths(wrap);
+    wrap.kbStripSafely();
 
     var track = document.createElement('div');
     track.className = 'kb-benefits__sbtrack';
@@ -111,7 +128,14 @@
     }
 
     wrap.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
+    var resizeTimer = null;
+    window.addEventListener('resize', function () {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        if (wrap.kbStripSafely) wrap.kbStripSafely();
+        update();
+      }, 100);
+    });
 
     function pointerDown(e) {
       dragging = true;
@@ -168,6 +192,8 @@
 
   window.addEventListener('load', function () {
     var wraps = document.querySelectorAll('.kb-benefits .kb-benefits__wrap');
-    for (var i = 0; i < wraps.length; i++) stripInlineWidths(wraps[i]);
+    for (var i = 0; i < wraps.length; i++) {
+      if (wraps[i].kbStripSafely) wraps[i].kbStripSafely();
+    }
   });
 })();
