@@ -22,6 +22,8 @@
 .kb-benefits {
   width: 100% !important;
   max-width: 1236px !important;
+  min-width: 0 !important;
+  overflow-x: clip;
   margin-left: auto !important;
   margin-right: auto !important;
   font-family: "Nunito Sans", -apple-system, "Segoe UI", Arial, sans-serif !important;
@@ -162,7 +164,7 @@
   .kb-benefits .kb-benefits__sbthumb:active {
     background: #9E9E9E;
   }
-
+  
   .kb-benefits .kb-benefits__table {
     min-width: 720px !important;
   }
