@@ -114,9 +114,6 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
-    width: calc(100% + 16px) !important;
-    max-width: none !important;
-    margin-right: -16px !important;
   }
 
   .kb-benefits .kb-benefits__wrap::-webkit-scrollbar {
@@ -165,6 +162,7 @@
     background: #9E9E9E;
   }
 
+  .kb-benefits .kb-benefits__table {
     min-width: 720px !important;
   }
 
@@ -183,5 +181,13 @@
     line-height: 1.2 !important;
     letter-spacing: 0.4px !important;
     padding: 12px 0 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .kb-benefits .kb-benefits__wrap {
+    width: calc(100% + 16px) !important;
+    max-width: none !important;
+    margin-right: -16px !important;
   }
 }
