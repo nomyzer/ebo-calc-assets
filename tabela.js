@@ -1,12 +1,45 @@
-/* kb-benefits - sztuczny pasek przewijania (dziala tez na iOS).
-   Tworzy pod tabela wlasny tor i kciuk zsynchronizowane ze scrollem
-   natywnego kontenera .kb-benefits__wrap. Bez zaleznosci, czysty JS. */
 (function () {
   'use strict';
+  function stripInlineWidths(wrap) {
+    var targets = [wrap];
+    var inner = wrap.querySelectorAll(
+      '.scroll-wrapper, .scroll-content, .kb-benefits__table, table'
+    );
+    for (var i = 0; i < inner.length; i++) targets.push(inner[i]);
+    for (var j = 0; j < targets.length; j++) {
+      var s = targets[j].style;
+      if (s.width) s.removeProperty('width');
+      if (s.minWidth) s.removeProperty('min-width');
+      if (s.maxWidth) s.removeProperty('max-width');
+      if (s.height) s.removeProperty('height');
+    }
+  }
+
+  function watchInlineWidths(wrap) {
+    if (!window.MutationObserver) return;
+    var mo = new MutationObserver(function (muts) {
+      for (var i = 0; i < muts.length; i++) {
+        var el = muts[i].target;
+        if (el.style && (el.style.width || el.style.minWidth ||
+            el.style.maxWidth || el.style.height)) {
+          stripInlineWidths(wrap);
+          break;
+        }
+      }
+    });
+    mo.observe(wrap, {
+      attributes: true,
+      attributeFilter: ['style'],
+      subtree: true
+    });
+  }
 
   function initKbScrollbar(wrap) {
     if (wrap.dataset.kbScrollbar === '1') return;
     wrap.dataset.kbScrollbar = '1';
+
+    stripInlineWidths(wrap);
+    watchInlineWidths(wrap);
 
     var track = document.createElement('div');
     track.className = 'kb-benefits__sbtrack';
@@ -91,4 +124,9 @@
   } else {
     initAll();
   }
+
+  window.addEventListener('load', function () {
+    var wraps = document.querySelectorAll('.kb-benefits .kb-benefits__wrap');
+    for (var i = 0; i < wraps.length; i++) stripInlineWidths(wraps[i]);
+  });
 })();
