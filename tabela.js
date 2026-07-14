@@ -1,10 +1,11 @@
+
 (function () {
   'use strict';
+
   function stripInlineWidths(wrap) {
+
     var targets = [wrap];
-    var inner = wrap.querySelectorAll(
-      '.scroll-wrapper, .scroll-content, .kb-benefits__table, table'
-    );
+    var inner = wrap.querySelectorAll('.scroll-wrapper, .scroll-content');
     for (var i = 0; i < inner.length; i++) targets.push(inner[i]);
     for (var j = 0; j < targets.length; j++) {
       var s = targets[j].style;
@@ -12,6 +13,26 @@
       if (s.minWidth) s.removeProperty('min-width');
       if (s.maxWidth) s.removeProperty('max-width');
       if (s.height) s.removeProperty('height');
+    }
+
+    var tbl = wrap.querySelector('.kb-benefits__table');
+    if (tbl) {
+      var enforce = {
+        'width': '100%',
+        'max-width': '100%',
+        'margin-left': '0px',
+        'margin-right': '0px',
+        'transform': 'none',
+        'position': 'static',
+        'border-collapse': 'collapse',
+        'table-layout': 'fixed'
+      };
+      for (var p in enforce) {
+        if (tbl.style.getPropertyValue(p) !== enforce[p] ||
+            tbl.style.getPropertyPriority(p) !== 'important') {
+          tbl.style.setProperty(p, enforce[p], 'important');
+        }
+      }
     }
   }
 
