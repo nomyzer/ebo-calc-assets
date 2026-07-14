@@ -108,6 +108,7 @@
   white-space: nowrap !important;
 }
 
+
 @media (max-width: 900px) {
   .kb-benefits .kb-benefits__wrap {
     overflow-x: auto;
