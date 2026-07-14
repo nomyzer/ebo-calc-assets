@@ -169,7 +169,7 @@
     background: #9E9E9E;
   }
 
-  .kb-benefits .kb-benefits__table {
+  .kb-benefits .kb-benefits__wrap .kb-benefits__table.kb-benefits__table {
     min-width: 720px !important;
   }
 
