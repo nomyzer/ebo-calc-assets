@@ -38,10 +38,16 @@
   padding-right: 1px !important;
 }
 
-.kb-benefits .kb-benefits__table {
+.kb-benefits .kb-benefits__wrap .kb-benefits__table.kb-benefits__table {
   width: 100% !important;
   max-width: 100% !important;
   min-width: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  transform: none !important;
+  left: auto !important;
+  right: auto !important;
+  position: static !important;
   border-collapse: collapse !important;
   border: 0 !important;
   table-layout: fixed !important;
