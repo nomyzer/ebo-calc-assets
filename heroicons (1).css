@@ -1,21 +1,24 @@
 /*
-  Nadpisanie sekcji .l-sec--hero-boxes .l-hero-icons, żeby wyglądała jak na
-  screenie nr 1 (kolumny równej szerokości, linie działowe, mała ikona nad
-  tekstem, duża kolorowa liczba + szary podpis wersalikami).
+  Nadpisanie sekcji .l-sec--hero-boxes .l-hero-icons.
 
-  Uwaga: to tylko CSS — nie zmienia znaczników HTML, nie podmienia plików SVG
-  (ich nie da się przekolorować przez CSS, bo to <img src="...svg">) i nie
-  narusza font-family — zmieniana jest wyłącznie wielkość czcionki.
+  Desktop (min-width: 1280px): 3 równe kolumny z pionową kreską działową
+  (1px, wysokość 140px, kolor #E3E3E3), ikona nad tekstem.
 
-  Sekcja jest obok .iframe-box (form), więc .l-hero-icons zostaje na 60%
-  szerokości — tak jak w motywie. Layout kolumnowy, linie działowe i
-  wyśrodkowanie ikony dotyczą tylko desktopu (min-width: 1280px), bo poniżej
-  tego motyw i tak przełącza .l-box na pełną szerokość w stosie.
+  Mobile/tablet (max-width: 1279.98px): motyw domyślnie układa ikonę po
+  lewej i tekst wyrównany do lewej w rzędzie — tu jest to nadpisane na
+  wyśrodkowany układ w kolumnie (ikona nad liczbą nad podpisem) z poziomą
+  kreską działową (ta sama grubość/kolor) pod każdą pozycją oprócz
+  ostatniej, zgodnie ze screenem.
 
-  Zawiera tylko deklaracje, które faktycznie coś zmieniają względem CSS
-  motywu (te identyczne z motywem zostały pominięte). !important tylko tam,
-  gdzie realnie jest potrzebny — czyli przy nadpisywaniu inline
-  style="font-size:24px" w znaczniku <p>.
+  Liczba: waga 700, 4rem / line-height 4.8rem.
+  Podpis: waga 600, 1.6rem / line-height 2.4rem, kolor #3B352E.
+
+  To tylko CSS — nie zmienia znaczników HTML, nie podmienia plików SVG (ich
+  nie da się przekolorować przez CSS, bo to <img src="...svg">) i nie
+  narusza font-family — zmieniana jest wyłącznie wielkość/waga czcionki.
+  !important tylko tam, gdzie realnie jest potrzebny (inline
+  style="font-size:24px" w <p>, oraz padding motywu ustawiony z !important
+  w breakpoincie mobile).
 */
 
 @media (min-width: 1280px) {
@@ -34,10 +37,11 @@
     content: '';
     position: absolute;
     left: 0;
-    top: 0.4rem;
-    bottom: 0.4rem;
+    top: 50%;
     width: 1px;
-    background: #e0e0e0;
+    height: 140px;
+    background: #e3e3e3;
+    transform: translateY(-50%);
   }
 
   /* Wysokość ikony — samego SVG nie da się przestylować z CSS.
@@ -55,23 +59,49 @@
   .l-sec--hero-boxes .t-content br {
     display: inline;
   }
+
+  /* Wyśrodkowany układ w kolumnie zamiast ikony po lewej + tekstu w rzędzie */
+  .l-sec--hero-boxes .l-box {
+    text-align: center;
+    display: block;
+    margin-bottom: 0;
+    padding: 3.2rem 0 !important;
+  }
+
+  .l-sec--hero-boxes .l-box:first-child {
+    padding-top: 0 !important;
+  }
+
+  .l-sec--hero-boxes .l-hero-icons .l-box img {
+    position: static;
+    display: block;
+    margin: 0 auto 1.6rem;
+  }
+
+  /* Pozioma kreska działowa zamiast pionowej, między pozycjami */
+  .l-sec--hero-boxes .l-box:not(:last-child) {
+    border-bottom: 1px solid #e3e3e3;
+  }
 }
 
 /* Liczba = pierwszy wiersz akapitu (przed <br>) */
 html:not(:has(body.pru-lead-landing)) .l-sec--hero-boxes .l-inner .l-hero-icons .l-box .t-content p::first-line {
-  font-size: 3rem;
+  font-weight: 700;
+  font-size: 4rem;
+  line-height: 4.8rem;
   letter-spacing: normal;
   text-transform: none;
 }
 
-/* Podpis = reszta akapitu (po <br>) — tylko wielkość czcionki, bez zmiany fontu.
+/* Podpis = reszta akapitu (po <br>) — tylko wielkość/waga czcionki, bez zmiany fontu.
    font-size ma !important, bo inline style="font-size:24px" w <p> inaczej wygrywa. */
 html:not(:has(body.pru-lead-landing)) .l-sec--hero-boxes .l-inner .l-hero-icons .l-box .t-content p {
-  font-size: 1.2rem !important;
-  line-height: 1.8rem;
+  font-size: 1.6rem !important;
+  font-weight: 600;
+  line-height: 2.4rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #8b8b8b;
+  color: #3b352e;
   margin: 0;
 }
 
