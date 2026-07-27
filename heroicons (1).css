@@ -1,0 +1,86 @@
+/*
+  Nadpisanie sekcji .l-sec--hero-boxes .l-hero-icons, żeby wyglądała jak na
+  screenie nr 1 (kolumny równej szerokości, linie działowe, mała ikona nad
+  tekstem, duża kolorowa liczba + szary podpis wersalikami).
+
+  Uwaga: to tylko CSS — nie zmienia znaczników HTML, nie podmienia plików SVG
+  (ich nie da się przekolorować przez CSS, bo to <img src="...svg">) i nie
+  narusza font-family — zmieniana jest wyłącznie wielkość czcionki.
+
+  Sekcja jest obok .iframe-box (form), więc .l-hero-icons zostaje na 60%
+  szerokości — tak jak w motywie. Layout kolumnowy, linie działowe i
+  wyśrodkowanie ikony dotyczą tylko desktopu (min-width: 1280px), bo poniżej
+  tego motyw i tak przełącza .l-box na pełną szerokość w stosie.
+
+  Zawiera tylko deklaracje, które faktycznie coś zmieniają względem CSS
+  motywu (te identyczne z motywem zostały pominięte). !important tylko tam,
+  gdzie realnie jest potrzebny — czyli przy nadpisywaniu inline
+  style="font-size:24px" w znaczniku <p>.
+*/
+
+@media (min-width: 1280px) {
+  /* motyw ma tu już width:60%/justify-content:space-between — bez zmian,
+     więc ta reguła się nie powtarza */
+
+  .l-sec--hero-boxes .l-box,
+  .l-sec--hero-boxes .l-box:nth-child(2),
+  .l-sec--hero-boxes .l-box:last-child {
+    box-sizing: border-box;
+    width: 33.333%;
+    padding: 0 2.4rem;
+  }
+
+  .l-sec--hero-boxes .l-box:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    width: 1px;
+    background: #e0e0e0;
+  }
+
+  /* Wysokość ikony — samego SVG nie da się przestylować z CSS.
+     Wyśrodkowanie poziome dziedziczy się z text-align: center na .l-box,
+     więc nie trzeba tu display/margin-auto — wystarczy odstęp pod spodem. */
+  .l-sec--hero-boxes .l-hero-icons .l-box img {
+    max-height: 4.2rem;
+    margin-bottom: 1.8rem;
+  }
+}
+
+@media (max-width: 1279.98px) {
+  /* Motyw w tym breakpoincie ukrywa <br> — potrzebny, żeby ::first-line
+     niżej poprawnie oddzielał liczbę od podpisu */
+  .l-sec--hero-boxes .t-content br {
+    display: inline;
+  }
+}
+
+/* Liczba = pierwszy wiersz akapitu (przed <br>) */
+html:not(:has(body.pru-lead-landing)) .l-sec--hero-boxes .l-inner .l-hero-icons .l-box .t-content p::first-line {
+  font-size: 3rem;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+/* Podpis = reszta akapitu (po <br>) — tylko wielkość czcionki, bez zmiany fontu.
+   font-size ma !important, bo inline style="font-size:24px" w <p> inaczej wygrywa. */
+html:not(:has(body.pru-lead-landing)) .l-sec--hero-boxes .l-inner .l-hero-icons .l-box .t-content p {
+  font-size: 1.2rem !important;
+  line-height: 1.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8b8b8b;
+  margin: 0;
+}
+
+/* Kolor liczby wg kolumny */
+.l-sec--hero-boxes .l-box:nth-child(1) .t-content p::first-line,
+.l-sec--hero-boxes .l-box:nth-child(2) .t-content p::first-line {
+  color: #e2661d;
+}
+
+.l-sec--hero-boxes .l-box:nth-child(3) .t-content p::first-line {
+  color: #155263;
+}
