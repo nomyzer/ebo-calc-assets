@@ -1,0 +1,505 @@
+/* EBO-CSS-VERSION: v27 */
+/* Kalkulator EBO — wersja kompaktowa kolumnowa.
+
+   UKŁAD  : sekcja .l-sec--images-checks (tekst po lewej, kalkulator po prawej)
+            — wzorzec z modułu "Wysokość Twojej przyszłej emerytury".
+   WYGLĄD : design system kalkulatorów pru.pl (sekcja "new design css"):
+            .calc-box, .calc-label, .calc-radio-item, .calc-slider-box,
+            .range-wrapper, .calc-col-row, .calc-col-price, .c-tooltip, .c-btn.
+
+   Reguły poniżej to kopia ICH wartości. Na pru.pl dublują to, co i tak jest
+   w globalnym arkuszu (więc wygląd = produkcja), a gdy arkusz nie jest
+   załadowany, moduł dalej się renderuje zamiast rozpaść.
+
+   Ikony radio są data-URI zamiast ich ../img/*.svg — te ścieżki rozwiązują się
+   względem ICH arkusza i działają wyłącznie na pru.pl. */
+
+/* ===== Sekcja + układ kolumnowy ===== */
+#pru-calc-sec .l-wrapper {
+  display: flex;
+  align-items: flex-start;
+}
+#pru-calc-sec .l-column--content.right-image {
+  padding-left: 0;
+  padding-right: 8rem;
+}
+#pru-calc-sec .l-column--calc {
+  width: 44%;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* ===== Scope kalkulatora ===== */
+#pru-calc *,
+#pru-calc *::before,
+#pru-calc *::after { box-sizing: border-box; }
+
+/* Utility pru.pl */
+#pru-calc .m-b-20 { margin-bottom: 2rem; }
+#pru-calc .m-b-24 { margin-bottom: 2.4rem; }
+#pru-calc .p-b-24 { padding-bottom: 2.4rem; }
+
+/* ===== Panel: .calc-box (pru.pl) ===== */
+#pru-calc .calc-box {
+  border: 1px solid #E5EAF0;
+  background: #F8FAFC;
+  padding: 2.4rem;
+}
+#pru-calc .calc-box-head {
+  border-bottom: 1px solid #E5EAF0;
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  justify-content: space-between;
+}
+#pru-calc .calc-box-title {
+  margin: 0;
+  padding: 0;
+  font-size: 1.8rem;
+  line-height: 2.6rem;
+  font-weight: bold;
+  color: #000000;
+}
+
+/* ===== Wiersz inputu: .calc-input-row.border-1 (pru.pl) ===== */
+#pru-calc .calc-input-row.border-1 {
+  border: 1px solid #E5EAF0;
+  background: #fff;
+  padding: 2rem;
+}
+#pru-calc .calc-input-row:last-child { margin-bottom: 0; }
+
+/* ===== Etykieta: .calc-label (pru.pl) ===== */
+#pru-calc .calc-label {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  margin: 0 0 0.8rem;
+  font-weight: 600;
+  color: #000000;
+}
+
+/* ===== Radio płci: .calc-radio / .calc-radio-item (pru.pl) ===== */
+#pru-calc .calc-radio {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+#pru-calc .calc-radio-item {
+  position: relative;
+  width: calc(50% - 0.4rem);
+  background: #FFFFFF;
+  border: 1px solid #E5EAF0;
+  padding: 1.5rem 1.6rem 1.5rem 5.6rem;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+  color: #000000;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+#pru-calc .calc-radio-item::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: 1.6rem;
+  margin: auto 0;
+  width: 2.8rem;
+  height: 2.8rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='13' fill='%23fff' stroke='%23B0C4C6' stroke-width='2'/%3E%3C/svg%3E");
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+#pru-calc .calc-radio-item:has(input:checked) { border-color: #055A60; }
+#pru-calc .calc-radio-item:has(input:checked)::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='14' fill='%23055A60'/%3E%3Cpath d='M8 14.5l4 4 8-8' stroke='%23fff' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+#pru-calc .calc-radio-item:hover:not(:has(input:checked)) {
+  background: #F3FBFB;
+  border-color: #055A60;
+}
+#pru-calc .calc-radio-item input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+  margin: 0;
+}
+
+/* ===== Suwak: .calc-slider-box / .range-wrapper (pru.pl) ===== */
+#pru-calc .calc-slider-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+#pru-calc .calc-slider-box.is-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+#pru-calc .step-btn {
+  height: 5.6rem;
+  width: 5.6rem;
+  flex-shrink: 0;
+  border: 1px solid #E5EAF0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 2.8rem;
+  font-weight: 400;
+  line-height: 1;
+  color: #000000;
+  cursor: pointer;
+}
+#pru-calc .step-btn:hover {
+  background: #F8FAFC;
+  border-color: #D9DFE8;
+  color: #055A60;
+}
+#pru-calc .step-btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+/* Blokada zaznaczania i podświetlenia dotyku na +/- — jak w produkcji */
+#pru-calc .step-btn,
+#pru-calc .step-btn img,
+#pru-calc .step-btn svg {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  touch-action: manipulation;
+}
+#pru-calc .range-wrapper {
+  flex-grow: 1;
+  min-width: 0;
+  position: relative;
+  padding: 1.2rem 0;
+}
+#pru-calc .range-wrapper-input {
+  width: 100%;
+  border: 1px solid #E5EAF0;
+  border-left-width: 0;
+  border-right-width: 0;
+  height: 5.6rem;
+  background: #fff;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+  font-weight: 600;
+  color: #000;
+  gap: 0.4rem;
+}
+/* Widoczna kreska to background samego inputa (3px).
+   Obszar dotyku to TOR — 6rem i przezroczysty. Wzorzec z produkcji pru.pl. */
+#pru-calc .range-wrapper input[type="range"] {
+  width: 100%;
+  height: 3px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(90deg, #055A60 var(--pct, 0%), #DCF3F3 var(--pct, 0%));
+  cursor: pointer;
+  position: absolute;
+  bottom: 1.125rem;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: pan-y;
+}
+#pru-calc .range-wrapper input[type="range"]:focus { outline: none; }
+#pru-calc .range-wrapper input[type="range"]::-webkit-slider-runnable-track {
+  height: 6rem;
+  background: transparent;
+  border: none;
+}
+#pru-calc .range-wrapper input[type="range"]::-moz-range-track {
+  height: 6rem;
+  background: transparent;
+  border: none;
+}
+#pru-calc .range-wrapper input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 2.3rem;
+  height: 2.3rem;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: #fff;
+  border: 0.3rem solid #055A60;
+  margin-top: calc((4.3rem - 0.75rem) / 2);
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  cursor: pointer;
+}
+#pru-calc .range-wrapper input[type="range"]::-moz-range-thumb {
+  width: 2.3rem;
+  height: 2.3rem;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: #fff;
+  border: 0.3rem solid #055A60;
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  cursor: pointer;
+}
+
+/* ===== Wyniki: .calc-col-row / .calc-col-price (pru.pl) ===== */
+#pru-calc .calc-col-row {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+}
+#pru-calc .calc-col-row:last-child { margin-bottom: 0; }
+#pru-calc .calc-col-row > span {
+  font-size: 1.4rem;
+  line-height: 2rem;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+#pru-calc .calc-col-price {
+  font-size: 2rem;
+  line-height: 3.2rem;
+  font-weight: bold;
+  color: #000000;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+#pru-calc .calc-col-price.large {
+  color: #EB5C37;
+  font-size: 4rem;
+  line-height: 4.8rem;
+}
+
+/* ===== CTA: .c-btn .c-btn--orange (pru.pl, potwierdzone w globalnym CSS) ===== */
+#pru-calc .calc-col-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+}
+#pru-calc .calc-col-btn .c-btn {
+  padding: 1.6rem 3.6rem !important;
+  line-height: 2rem !important;
+}
+/* Fallback, gdyby globalny arkusz pru.pl nie był załadowany */
+#pru-calc .c-btn {
+  box-shadow: none !important;
+  border-radius: 0;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 1.6rem;
+  font-weight: bold;
+  position: relative;
+  cursor: pointer;
+  text-decoration: none !important;
+}
+#pru-calc .c-btn--orange {
+  color: #ffffff !important;
+  background: #eb5c37;
+}
+#pru-calc .c-btn--orange:hover { background: #181818; }
+
+/* ===== Tooltip: trigger .c-tooltip (pru.pl), box zostaje nasz =====
+   Ich .c-tooltip-box otwiera się tylko na :hover — na mobilce nieosiągalny.
+   Zostawiamy nasz box wstrzykiwany do <body> (klik + klawiatura, clamp do
+   krawędzi ekranu, flip przy górze), w ich stylistyce. */
+#pru-calc .c-tooltip {
+  position: relative;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+}
+#pru-calc .c-tooltip img,
+#pru-calc .c-tooltip .pru-calc__tip-ico {
+  width: 1.8rem;
+  height: 1.8rem;
+  cursor: pointer;
+  display: block;
+  overflow: visible;
+  color: #055A60;
+  flex-shrink: 0;
+}
+.pru-calc__tip-box {
+  position: fixed;
+  z-index: 99999;
+  display: none;
+  background: #fff;
+  border: 1px solid #E5EAF0;
+  width: max-content;
+  max-width: 26.4rem;
+  box-shadow: 0px 20px 24px -8px #1213140A, 0px 24px 32px -12px #1213140A,
+              0 4px 16px rgba(0,0,0,0.12);
+  border-radius: 1.2rem;
+  padding: 1.2rem;
+  box-sizing: border-box;
+}
+.pru-calc__tip-box.is-open { display: block; }
+.pru-calc__tip-box::before,
+.pru-calc__tip-box::after {
+  content: '';
+  position: absolute;
+  left: calc(50% + var(--tip-arrow-offset, 0px));
+  border-style: solid;
+}
+.pru-calc__tip-box::before {
+  bottom: -9px;
+  transform: translateX(-50%);
+  border-width: 9px 7px 0 7px;
+  border-color: #E5EAF0 transparent transparent transparent;
+}
+.pru-calc__tip-box::after {
+  bottom: -8px;
+  transform: translateX(-50%);
+  border-width: 8px 6px 0 6px;
+  border-color: #fff transparent transparent transparent;
+}
+.pru-calc__tip-box.is-flipped::before {
+  bottom: auto;
+  top: -9px;
+  border-width: 0 7px 9px 7px;
+  border-color: transparent transparent #E5EAF0 transparent;
+}
+.pru-calc__tip-box.is-flipped::after {
+  bottom: auto;
+  top: -8px;
+  border-width: 0 6px 8px 6px;
+  border-color: transparent transparent #fff transparent;
+}
+.pru-calc__tip-box p {
+  font-size: 1.2rem !important;
+  line-height: 1.6rem !important;
+  margin: 0 !important;
+  color: #000000 !important;
+}
+
+/* ===== Disclaimer: typografia .calc-col-info (pru.pl) =====
+   Mechanikę rozwijania zostawiamy naszą — ich .is-expanded działa odwrotnie
+   i wymagałby przepisania JS. */
+#pru-calc .calc-col-info {
+  margin-top: 2.4rem;
+}
+#pru-calc .calc-col-info p {
+  font-size: 1.1rem;
+  line-height: 1.5em;
+  color: #464646;
+  margin: 0 0 0.8rem;
+}
+#pru-calc .calc-col-info p:last-child { margin-bottom: 0; }
+#pru-calc .calc-col-info a {
+  color: #464646;
+  text-decoration: underline !important;
+}
+#pru-calc .calc-col-info a:hover {
+  color: #000000;
+  text-decoration: none !important;
+}
+#pru-calc .calc-col-info__full { display: none; }
+#pru-calc .calc-col-info.is-open .calc-col-info__full { display: block; }
+#pru-calc .calc-col-info.is-open .calc-col-info__preview { display: none; }
+#pru-calc .calc-disclaimer__btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: 1.1rem;
+  line-height: 1.5em;
+  font-weight: bold;
+  color: #055A60;
+  cursor: pointer;
+  text-decoration: underline;
+}
+#pru-calc .calc-disclaimer__btn:hover { color: #17B0AD; }
+
+/* ===== Responsywność (progi pru.pl) ===== */
+@media (min-width: 960px) and (max-width: 1279.98px) {
+  #pru-calc-sec .l-column--calc { width: 50%; }
+  #pru-calc-sec .l-column--content.right-image { padding-right: 4rem; }
+  #pru-calc .calc-box { padding: 2rem; }
+  #pru-calc .calc-col-price {
+    font-size: 1.8rem;
+    line-height: 3rem;
+  }
+  #pru-calc .calc-col-price.large {
+    font-size: 3rem;
+    line-height: 3.8rem;
+  }
+  #pru-calc .calc-col-row > span {
+    font-size: 1.3rem;
+    line-height: 1.9rem;
+  }
+  #pru-calc .calc-radio-item {
+    font-size: 1.6rem;
+    line-height: 2.2rem;
+    padding-left: 5rem;
+  }
+}
+@media (max-width: 959.98px) {
+  #pru-calc-sec .l-wrapper { display: block; }
+  #pru-calc-sec .l-column--content.right-image {
+    padding-right: 0;
+    margin-top: 0;
+  }
+  #pru-calc-sec .l-column--calc {
+    width: 100%;
+    margin-top: 2.4rem;
+  }
+  #pru-calc .calc-box { padding: 1.6rem; }
+  #pru-calc .calc-box-title {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+  }
+  #pru-calc .calc-radio-item {
+    font-size: 1.6rem;
+    line-height: 2.2rem;
+  }
+}
+@media (max-width: 767.98px) {
+  #pru-calc .calc-input-row.border-1 {
+    background: #F8FAFC;
+    padding: 1.6rem;
+  }
+  #pru-calc .calc-col-row > span { font-size: 1.2rem; }
+  #pru-calc .calc-col-price {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+  }
+  #pru-calc .calc-col-price.large {
+    font-size: 2.4rem;
+    line-height: 3.2rem;
+  }
+  #pru-calc .calc-col-bottom { display: block; }
+  #pru-calc .calc-col-btn .c-btn { width: 100%; }
+}
