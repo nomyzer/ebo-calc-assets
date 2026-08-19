@@ -1,0 +1,332 @@
+/* EBO-CSS-VERSION: v32 */
+/* Kalkulator EBO — wersja kompaktowa kolumnowa.
+
+   UKŁAD  : wzorzec z modułu "Wysokość Twojej przyszłej emerytury"
+            (.l-wrapper + .l-column--content / .l-column--calc).
+   WYGLĄD : design system kalkulatorów pru.pl — .calc-box, .calc-label,
+            .calc-radio-item, .calc-slider-box, .range-wrapper, .calc-col-row,
+            .calc-col-price, .c-tooltip, .c-btn.
+
+   ZASADA: bazujemy na ich arkuszu, nadpisujemy WYŁĄCZNIE to, co nam nie gra.
+   Ten plik nie jest samowystarczalny — zakłada, że globalny CSS pru.pl
+   z sekcją "new design css" jest załadowany na stronie. Wszystko, co tylko
+   powtarzało ich wartości, zostało wycięte; nasze reguły mają wyższą
+   specyficzność (#pru-calc .x vs .x), więc brak własności = ich wartość.
+
+   Powody nadpisań są dwa: (1) wariant kompaktowy — mniejsze paddingi i
+   typografia, żeby kolumna dorównywała wysokością tekstowi obok;
+   (2) rzeczy, których produkcja nie ma — układ sekcji, wypełnienie suwaka,
+   tooltip otwierany klikiem. */
+
+/* ===== Układ kolumnowy (całość nasza) ===== */
+/* Blok może być wklejony WEWNĄTRZ istniejącego .l-wrapper modułu WP — wtedy to
+   ten przodek wnosi wcięcie i nasz #pru-calc-sec nic o nim nie wie. Zerujemy je
+   tylko na wrapperze, który faktycznie zawiera nasz blok, żeby nie ruszyć
+   pozostałych modułów. .l-inner zostaje nietknięty — jego padding to gutter
+   strony i to on wyrównuje nas do sąsiednich modułów. */
+.l-wrapper:has(> #pru-calc-sec) {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: none;
+}
+/* Blok nie wnosi własnej sekcji ani kontenera — moduł WP już je ma.
+   Powtórzenie .l-sec / .l-inner dublowałoby odstępy. */
+#pru-calc-sec {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+#pru-calc-sec .l-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 8rem;
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+/* .l-column--content nie ma w ich CSS flex-grow (szerokość dostaje tylko
+   kolumna obrazka/kalkulatora), więc sizowała się do treści i nie rozpychała
+   wiersza do pełnej szerokości .l-inner. */
+#pru-calc-sec .l-column--content {
+  flex: 1 1 0;
+  min-width: 0;
+}
+#pru-calc-sec .l-column--calc {
+  width: 44%;
+  flex-shrink: 0;
+  position: relative;
+}
+
+#pru-calc *,
+#pru-calc *::before,
+#pru-calc *::after { box-sizing: border-box; }
+
+/* .m-b-20 / .m-b-24 / .p-b-24 są w ich arkuszu — tego brakuje */
+#pru-calc .m-b-12 { margin-bottom: 1.2rem; }
+
+/* ===== Panel ===== */
+#pru-calc .calc-box { padding: 1.6rem; }        /* prod 2.4rem */
+/* Kreska rozdzielająca inputy od wyników — scalamy dwa panele w jeden,
+   produkcja nie ma odpowiednika */
+#pru-calc .calc-box-sep {
+  border-top: 1px solid #E5EAF0;
+  margin: 1.6rem 0;
+}
+
+#pru-calc .calc-input-row.border-1 { padding: 1.4rem; }   /* prod 2rem */
+#pru-calc .calc-input-row:last-child { margin-bottom: 0; }
+
+#pru-calc .calc-label {                          /* prod 1.6rem / 2.4rem */
+  font-size: 1.4rem;
+  line-height: 2rem;
+}
+
+/* ===== Radio płci ===== */
+/* nowrap + flex:1 1 0 zamiast ich width:calc(50% - 0.4rem) — przy wąskiej
+   kolumnie procent przekraczał kontener i zrzucał drugą opcję do nowej linii */
+#pru-calc .calc-radio { flex-wrap: nowrap; }
+#pru-calc .calc-radio-item {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto;
+  padding: 1.1rem 1.2rem 1.1rem 4.4rem;          /* prod 1.5rem 1.6rem 1.5rem 5.6rem */
+  font-size: 1.6rem;                             /* prod 1.8rem */
+  line-height: 2.2rem;                           /* prod 2.4rem */
+  margin: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+/* background-image celowo pominięte — podaje je ich .calc-radio-item::before
+   (icon-circle.svg / icon-check-circle.svg), ze ścieżką rozwiązaną względem
+   ICH arkusza. Tu tylko zmniejszenie pod wariant kompaktowy. */
+#pru-calc .calc-radio-item::before {
+  left: 1.2rem;                                  /* prod 1.6rem */
+  width: 2.2rem;                                 /* prod 2.8rem */
+  height: 2.2rem;
+}
+/* produkcja nie ma hoveru na radio */
+#pru-calc .calc-radio-item:hover:not(:has(input:checked)) {
+  background: #F3FBFB;
+  border-color: #055A60;
+}
+/* prod ma sztywne height:5.6rem — nasz item jest niższy */
+#pru-calc .calc-radio-item input {
+  height: 100%;
+  margin: 0;
+}
+
+/* ===== Suwak ===== */
+/* stan przed wyborem płci — produkcja nie ma tego na .calc-slider-box */
+#pru-calc .calc-slider-box.is-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+/* prod używa <img> w przycisku; u nas są znaki + / − , stąd typografia */
+#pru-calc .step-btn {
+  height: 4.8rem;                                /* prod 5.6rem */
+  width: 4.8rem;
+  font-family: inherit;
+  font-size: 2.8rem;
+  font-weight: 400;
+  line-height: 1;
+  color: #000000;
+  cursor: pointer;
+}
+#pru-calc .step-btn:hover { color: #055A60; }
+#pru-calc .step-btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+#pru-calc .range-wrapper {
+  min-width: 0;
+  padding: 0.8rem 0;                             /* prod 1.2rem 0 */
+}
+#pru-calc .range-wrapper-input {
+  height: 4.8rem;                                /* prod 5.6rem */
+  font-size: 1.6rem;                             /* prod 1.8rem */
+  line-height: 2.2rem;
+}
+/* Wypełnienie toru do pozycji kciuka — produkcja ma tu background:transparent
+   (nie pokazuje postępu). bottom przeliczone pod niższe pole 4.8rem. */
+#pru-calc .range-wrapper input[type="range"] {
+  background: linear-gradient(90deg, #055A60 var(--pct, 0%), #DCF3F3 var(--pct, 0%));
+  bottom: 0.725rem;                              /* prod 1.125rem */
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: pan-y;
+}
+#pru-calc .range-wrapper input[type="range"]:focus { outline: none; }
+/* Tor 6rem/transparent i geometria kciuka pochodzą z ich arkusza — to stamtąd
+   bierze się powiększony obszar dotyku. Nadpisujemy tylko box-sizing, żeby
+   0.3rem obwódki mieściło się w 2.3rem zamiast je powiększać. */
+#pru-calc .range-wrapper input[type="range"]::-webkit-slider-thumb { box-sizing: border-box; }
+#pru-calc .range-wrapper input[type="range"]::-moz-range-thumb { box-sizing: border-box; }
+
+/* ===== Wyniki ===== */
+#pru-calc .calc-col-row {
+  gap: 1.2rem;                                   /* prod 1.6rem */
+  margin-bottom: 0.8rem;                         /* prod 1rem */
+}
+#pru-calc .calc-col-row > span {
+  font-size: 1.3rem;                             /* prod 1.4rem */
+  line-height: 1.8rem;                           /* prod 2rem */
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+#pru-calc .calc-col-price {
+  font-size: 1.8rem;                             /* prod 2rem */
+  line-height: 2.6rem;
+  white-space: nowrap;
+}
+#pru-calc .calc-col-price.large {
+  font-size: 2.8rem;                             /* prod 4rem */
+  line-height: 3.4rem;
+}
+
+/* ===== CTA ===== */
+#pru-calc .calc-col-bottom {
+  gap: 1.2rem;                                   /* prod 1.6rem */
+  margin-top: 1.6rem;
+}
+#pru-calc .calc-col-btn { width: 100%; }
+#pru-calc .calc-col-btn .c-btn {
+  width: 100%;
+  padding: 1.2rem 2.8rem !important;             /* prod 1.6rem 3.6rem */
+  line-height: 2rem !important;
+}
+
+/* ===== Tooltip ===== */
+/* Ikona (.c-tooltip img) i pozycjonowanie triggera są ich. Nadpisujemy tylko
+   wyrównanie w wierszu wyniku. */
+#pru-calc .c-tooltip {
+  display: inline-flex;
+  align-items: center;
+}
+/* Box jest nasz w całości: ich .c-tooltip-box otwiera się wyłącznie na :hover,
+   więc na mobilce jest nieosiągalny. Nasz JS wstrzykuje go do <body> (klik +
+   klawiatura, clamp do krawędzi ekranu, odwrócenie przy górze). Strzałka na
+   trójkątach border zamiast ich icon-tail.svg — obraca się razem z boxem
+   bez dodatkowego żądania. */
+.pru-calc__tip-box {
+  position: fixed;
+  z-index: 99999;
+  display: none;
+  background: #fff;
+  border: 1px solid #E5EAF0;
+  width: max-content;
+  max-width: 26.4rem;
+  box-shadow: 0px 20px 24px -8px #1213140A, 0px 24px 32px -12px #1213140A,
+              0 4px 16px rgba(0,0,0,0.12);
+  border-radius: 1.2rem;
+  padding: 1.2rem;
+  box-sizing: border-box;
+}
+.pru-calc__tip-box.is-open { display: block; }
+.pru-calc__tip-box::before,
+.pru-calc__tip-box::after {
+  content: '';
+  position: absolute;
+  left: calc(50% + var(--tip-arrow-offset, 0px));
+  border-style: solid;
+}
+.pru-calc__tip-box::before {
+  bottom: -9px;
+  transform: translateX(-50%);
+  border-width: 9px 7px 0 7px;
+  border-color: #E5EAF0 transparent transparent transparent;
+}
+.pru-calc__tip-box::after {
+  bottom: -8px;
+  transform: translateX(-50%);
+  border-width: 8px 6px 0 6px;
+  border-color: #fff transparent transparent transparent;
+}
+.pru-calc__tip-box.is-flipped::before {
+  bottom: auto;
+  top: -9px;
+  border-width: 0 7px 9px 7px;
+  border-color: transparent transparent #E5EAF0 transparent;
+}
+.pru-calc__tip-box.is-flipped::after {
+  bottom: auto;
+  top: -8px;
+  border-width: 0 6px 8px 6px;
+  border-color: transparent transparent #fff transparent;
+}
+.pru-calc__tip-box p {
+  font-size: 1.2rem !important;
+  line-height: 1.6rem !important;
+  margin: 0 !important;
+  color: #000000 !important;
+}
+
+/* ===== Disclaimer ===== */
+/* Typografia i linki z ich .calc-col-info. Mechanika rozwijania nasza —
+   ich .is-expanded działa odwrotnie (ukrywa wszystko poza rozwinięciem). */
+#pru-calc .calc-col-info { margin-top: 1.2rem; }
+#pru-calc .calc-col-info p { margin: 0 0 0.6rem; }
+#pru-calc .calc-col-info p:last-child { margin-bottom: 0; }
+#pru-calc .calc-col-info__full { display: none; }
+#pru-calc .calc-col-info.is-open .calc-col-info__full { display: block; }
+#pru-calc .calc-col-info.is-open .calc-col-info__preview { display: none; }
+#pru-calc .calc-disclaimer__btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: 1.1rem;
+  line-height: 1.5em;
+  font-weight: bold;
+  color: #055A60;
+  cursor: pointer;
+  text-decoration: underline;
+}
+#pru-calc .calc-disclaimer__btn:hover { color: #17B0AD; }
+
+/* ===== Responsywność (progi pru.pl) ===== */
+@media (min-width: 960px) and (max-width: 1279.98px) {
+  #pru-calc-sec .l-column--calc { width: 50%; }
+  #pru-calc-sec .l-wrapper { gap: 4rem; }
+  #pru-calc .calc-col-price {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+  }
+  #pru-calc .calc-col-price.large {
+    font-size: 2.4rem;
+    line-height: 3rem;
+  }
+  #pru-calc .calc-col-row > span {
+    font-size: 1.2rem;
+    line-height: 1.7rem;
+  }
+  #pru-calc .calc-radio-item {
+    font-size: 1.5rem;
+    padding-left: 4rem;
+  }
+}
+@media (max-width: 959.98px) {
+  #pru-calc-sec .l-wrapper { display: block; }
+  #pru-calc-sec .l-column--calc {
+    width: 100%;
+    margin-top: 2.4rem;
+  }
+}
+@media (max-width: 767.98px) {
+  #pru-calc .calc-col-row > span { font-size: 1.2rem; }
+  #pru-calc .calc-col-price {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+  }
+  #pru-calc .calc-col-price.large {
+    font-size: 2.4rem;
+    line-height: 3rem;
+  }
+}
